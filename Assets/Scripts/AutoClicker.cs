@@ -10,6 +10,8 @@ public class AutoClicker : MonoBehaviour
 
     GameManager gameManager;
 
+    Coroutine autoClick;
+
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -18,21 +20,24 @@ public class AutoClicker : MonoBehaviour
     void Update()
     {
         internalIncrease = autoClickIncrease;
-        if (isAutoClicking == false)
-        {
-            isAutoClicking = true;
-        }
     }
 
     public void Starter(float interval, float income, float multiplier)
     {
-        StartCoroutine(AutoClick(interval, income, multiplier));
+        if (isAutoClicking == false)
+        {
+            isAutoClicking = true;
+            autoClick = StartCoroutine(AutoClick(interval, income, multiplier));
+        }
     }
 
     public IEnumerator AutoClick(float interval, float income, float multiplier)
     {
-        gameManager.money += income * multiplier;
-        yield return new WaitForSeconds(interval);
-        isAutoClicking = false;
+        while (true)
+        {
+            gameManager.money += income * multiplier;
+            yield return new WaitForSeconds(interval);
+            isAutoClicking = false;
+        }
     }
 }

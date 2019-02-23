@@ -12,26 +12,45 @@ public class GameManager : MonoBehaviour
 
     // AutoClicker 1
     public Text autoClicker1AmountText;
-    public Text autoClicker1BuyFor;
+    public Text autoClicker1BuyForText;
 
     float autoClicker1Amount = 0;
-    float autoClicker1BuyAmount = 5.0f;
-    float addedValue1 = 0.1f;
+    float autoClicker1Cost = 5f;
+    float autoClicker1Value = 0.25f;
 
     // AutoClicker 2
     public Text autoClicker2AmountText;
-    public Text autoClicker2BuyFor;
+    public Text autoClicker2BuyForText;
 
     float autoClicker2Amount = 0;
-    float autoClicker2BuyAmount = 10.0f;
-    float addedValue2 = 1f;
+    float autoClicker2Cost = 10f;
+    float autoClicker2Value = 1f;
+
+    // AutoClicker 3
+    public Text autoClicker3AmountText;
+    public Text autoClicker3BuyForText;
+
+    float autoClicker3Amount = 0;
+    float autoClicker3Cost = 15f;
+    float autoClicker3Value = 5f;
+
+    // AutoClicker 4
+    public Text autoClicker4AmountText;
+    public Text autoClicker4BuyForText;
+
+    float autoClicker4Amount = 0;
+    float autoClicker4Cost = 20f;
+    float autoClicker4Value = 10f;
 
     // Time
     private float nextActionTime = 0.0f;
 
     AutoClicker autoClicker;
 
-    // Start is called before the first frame update
+    // Money per sec
+    public Text moneyPerSecText;
+    public float moneyPerSec = 0;
+
     void Start()
     {
         autoClicker = FindObjectOfType<AutoClicker>();
@@ -42,49 +61,80 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (money >= 0.1f)
         {
-            money = Mathf.Round(money * 10.0f) * 0.1f;
-            moneyText.text = money.ToString("0.0") + " $";
+            money = Mathf.Round(money * 1000.0f) / 1000.0f;
+            moneyText.text = money.ToString("F2") + " $";
         }
 
-        nextActionTime += Time.deltaTime;
-
-        if (nextActionTime > 2f)
-        {
-            money += addedValue1 * autoClicker1Amount;
-            money += addedValue2 * autoClicker2Amount;
-            nextActionTime = 0;
-        }
-
+        moneyPerSec = (autoClicker1Amount * autoClicker1Value) + (autoClicker2Amount * autoClicker2Value) + (autoClicker3Amount * autoClicker3Value) + (autoClicker4Amount * autoClicker4Value);
+        moneyPerSecText.text = "+ " + moneyPerSec.ToString() + " $ / sec";
     }
 
     public void AutoClicker1()
     {
-        if (money >= autoClicker1BuyAmount)
+        if (money >= autoClicker1Cost)
         {
-            autoClicker.Starter(1f, addedValue1, autoClicker1BuyAmount);
-            money -= autoClicker1BuyAmount;
-            autoClicker1BuyAmount *= 2;
+            money -= autoClicker1Cost;
+            autoClicker1Cost *= 2;
             autoClicker1Amount++;
-            autoClicker1BuyFor.text = "Buy for: " + autoClicker1BuyAmount.ToString() + "$";
+            autoClicker1BuyForText.text = "Buy for: " + autoClicker1Cost.ToString() + "$";
             autoClicker1AmountText.text = "Amount: " + autoClicker1Amount.ToString();
+            autoClicker.Starter(1f, autoClicker1Value, autoClicker1Amount);
         }
     }
 
     public void AutoClicker2()
     {
-        if (money >= autoClicker2BuyAmount)
+        if (money >= autoClicker2Cost)
         {
-            autoClicker.Starter(1f, addedValue2, autoClicker2BuyAmount);
-            money -= autoClicker2BuyAmount;
-            autoClicker2BuyAmount *= 2;
+            money -= autoClicker2Cost;
+            autoClicker2Cost *= 2;
             autoClicker2Amount++;
-            autoClicker2BuyFor.text = "Buy for: " + autoClicker2BuyAmount.ToString() + "$";
+            autoClicker2BuyForText.text = "Buy for: " + autoClicker2Cost.ToString() + "$";
             autoClicker2AmountText.text = "Amount: " + autoClicker2Amount.ToString();
+            autoClicker.Starter(1f, autoClicker2Value, autoClicker2Amount);
+        }
+    }
+
+    public void AutoClicker3()
+    {
+        if (money >= autoClicker3Cost)
+        {
+            money -= autoClicker3Cost;
+            autoClicker3Cost *= 2;
+            autoClicker3Amount++;
+            autoClicker3BuyForText.text = "Buy for: " + autoClicker3Cost.ToString() + "$";
+            autoClicker3AmountText.text = "Amount: " + autoClicker3Amount.ToString();
+            autoClicker.Starter(1f, autoClicker3Value, autoClicker3Amount);
+        }
+    }
+
+    public void AutoClicker4()
+    {
+        if (money >= autoClicker4Cost)
+        {
+            money -= autoClicker4Cost;
+            autoClicker4Cost *= 2;
+            autoClicker4Amount++;
+            autoClicker4BuyForText.text = "Buy for: " + autoClicker4Cost.ToString() + "$";
+            autoClicker4AmountText.text = "Amount: " + autoClicker4Amount.ToString();
+            autoClicker.Starter(1f, autoClicker4Value, autoClicker4Amount);
+        }
+    }
+
+    public void AutoClick(float cost, float value, float amount, Text buyFor, Text AmountText)
+    {
+        if (money >= cost)
+        {
+            autoClicker.Starter(1f, value, amount);
+            money -= cost;
+            cost *= 2;
+            amount++;
+            buyFor.text = "Buy for: " + cost.ToString() + "$";
+            AmountText.text = "Amount: " + amount.ToString();
         }
     }
 }

@@ -14,6 +14,6 @@ public class ButtonClicker : MonoBehaviour
 
     public void AddMoneyOnClick()
     {
-        gameManager.money += 0.1f;
+        gameManager.money += 1f;
     }
 }
