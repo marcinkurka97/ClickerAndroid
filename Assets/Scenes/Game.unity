@@ -1089,8 +1089,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moneyText: {fileID: 1887321916}
   autoClicker1AmountText: {fileID: 1650139066}
+  autoClicker1BuyFor: {fileID: 505360216}
   autoClicker2AmountText: {fileID: 1089157603}
-  period: 0.1
+  autoClicker2BuyFor: {fileID: 430922393}
 --- !u!4 &1317449259
 Transform:
   m_ObjectHideFlags: 0
