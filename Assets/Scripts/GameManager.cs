@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    AutoClicker autoClicker;
+
     // Money
     public Text moneyText;
 
     public float money = 0;
+    public float currentMoney;
 
     // AutoClicker 1
     public Text autoClicker1AmountText;
@@ -43,9 +46,7 @@ public class GameManager : MonoBehaviour
     float autoClicker4Value = 10f;
 
     // Time
-    private float nextActionTime = 0.0f;
-
-    AutoClicker autoClicker;
+    float timer = 0.0f;
 
     // Money per sec
     public Text moneyPerSecText;
@@ -63,8 +64,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (money >= 0.1f)
+        timer += Time.deltaTime;
+
+        if (money > 0.1f)
         {
+            //money = Mathf.Lerp(money, money + moneyPerSec, timer/120);          
             money = Mathf.Round(money * 1000.0f) / 1000.0f;
             moneyText.text = money.ToString("F2") + " $";
         }
@@ -137,4 +141,5 @@ public class GameManager : MonoBehaviour
             AmountText.text = "Amount: " + amount.ToString();
         }
     }
+
 }

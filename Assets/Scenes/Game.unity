@@ -2410,6 +2410,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moneyText: {fileID: 1887321916}
   money: 0
+  currentMoney: 0
   autoClicker1AmountText: {fileID: 290829733}
   autoClicker1BuyForText: {fileID: 1474703472}
   autoClicker2AmountText: {fileID: 1089157603}
@@ -3247,7 +3248,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 214}
-  m_SizeDelta: {x: 277.97, y: 82.630005}
+  m_SizeDelta: {x: 480, y: 93.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2145731422
 MonoBehaviour:
